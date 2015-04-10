@@ -1,0 +1,33 @@
+<%= form_tag({:controller => "fetch", :action => "index"}, method: :get) do %>
+  <p>
+    <%= text_field_tag :url, (@url or 'https://slack.com') %>
+    <%= submit_tag "Fetch" %>
+  </p>
+<% end %>
+
+<h3>Fetched URL: <%= @url %></h3>
+
+<% if @msg and not @msg.empty? %>
+    <h3 style="color:red"><%= @msg %></h3>
+<% end %>
+
+<%= form_tag({:controller => "fetch", :action => "highlight"}, :id => "select_tag") do %>
+    <p>
+        <% @tags.each do |tag, count| %>
+            <%= link_to "#{tag} (#{count})", "#", :onclick => "highlightTag('#{tag}')" %>
+        <% end %>
+    </p>
+    <%= hidden_field_tag :url, @url %>    
+    <%= hidden_field_tag :source_code, @source_code %>
+<% end %>
+
+<p><%= @render.html_safe %></p>
+
+
+<script>
+    function highlightTag(tag) {
+        var form = $('#select_tag');
+        form.append('<input type="hidden" name="tag" value=' + tag + ' />');
+        form.submit();
+    }
+</script>
