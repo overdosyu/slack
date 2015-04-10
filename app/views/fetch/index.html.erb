@@ -14,7 +14,7 @@
 <%= form_tag({:controller => "fetch", :action => "highlight"}, :id => "select_tag") do %>
     <p>
         <% @tags.each do |tag, count| %>
-            <%= link_to "#{tag} (#{count})", "#", :onclick => "highlightTag('#{tag}')" %>
+            <%= link_to "#{tag} (#{count})", "javascript:{}", :onclick => "highlightTag('#{tag}')" %>
         <% end %>
     </p>
     <%= hidden_field_tag :url, @url %>    
